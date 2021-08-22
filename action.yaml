@@ -1,0 +1,5 @@
+name: 'Retrieve Tweets and Embeds'
+description: 'Search recent tweets and retrieve embed codes from Twitter API'
+runs:
+  using: 'node14'
+  main: 'dist/index.js'
