@@ -2,4 +2,4 @@ name: 'Retrieve Tweets and Embeds'
 description: 'Search recent tweets and retrieve embed codes from Twitter API'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'tweetGet.js'
