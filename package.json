@@ -1,0 +1,26 @@
+{
+  "name": "elgl-cityhallselfie",
+  "version": "1.0.0",
+  "description": "Retrieving tweets and embed codes for cityhallselfie day",
+  "main": "tweetGet.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonajones73/elgl-cityhallselfie.git"
+  },
+  "author": "Jason Jones",
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "bugs": {
+    "url": "https://github.com/jasonajones73/elgl-cityhallselfie/issues"
+  },
+  "homepage": "https://github.com/jasonajones73/elgl-cityhallselfie#readme",
+  "dependencies": {
+    "@actions/core": "^1.5.0",
+    "@actions/github": "^5.0.0",
+    "dotenv": "^10.0.0",
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.1"
+  }
+}
