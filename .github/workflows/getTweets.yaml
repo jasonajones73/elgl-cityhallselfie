@@ -25,5 +25,5 @@ jobs:
       - name: commit
         run: |
           git add tweets.json embedCode.json
-          git commit -m "Updated tweets and embeds"
+          git diff-index --quiet HEAD || git commit -m 'Update tweets and embeds'
           git push origin main
