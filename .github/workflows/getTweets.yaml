@@ -15,12 +15,12 @@ jobs:
       - name: Run action
         uses: ./
       - name: setup git config
-        run:
+        run: |
           git config user.name "Jason Jones"
           git config user.email "jasonajones73@gmail.com"
 
       - name: commit
-        run:
+        run: |
           git add tweets.json embedCode.json
           git commit -m "Updated tweets and embeds"
           git push origin main
