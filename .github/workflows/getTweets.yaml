@@ -2,8 +2,10 @@ on:
   push:
     branches: 
       - main
+environment:
+  name: primary
 
-jobs:
+  jobs:
   get_tweets:
     name: 'Retrieve Tweets and Embeds'
     runs-on: ubuntu-latest
