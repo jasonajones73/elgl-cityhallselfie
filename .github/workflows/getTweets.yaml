@@ -14,3 +14,13 @@ jobs:
         uses: actions/setup-node@v2
       - name: Run action
         uses: ./
+      - name: setup git config
+        run:
+          git config user.name "Jason Jones"
+          git config user.email "jasonajones73@gmail.com"
+
+      - name: commit
+        run:
+          git add tweets.json embedCode.json
+          git commit -m "Updated tweets and embeds"
+          git push origin main
