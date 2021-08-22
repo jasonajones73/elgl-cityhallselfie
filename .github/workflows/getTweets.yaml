@@ -14,6 +14,8 @@ jobs:
         uses: actions/setup-node@v2
       - name: Run action
         uses: ./
+        env:
+          BEARER: ${{ secrets.BEARER }}
       - name: setup git config
         run: |
           git config user.name "Jason Jones"
