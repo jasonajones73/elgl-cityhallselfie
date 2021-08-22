@@ -15,3 +15,4 @@ jobs:
         with:
           node-version: '14'
       - run: 'tweetGet.js'
+        using: 'node14'
