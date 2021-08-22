@@ -2,13 +2,13 @@ on:
   push:
     branches: 
       - main
-environment:
-  name: primary
 
   jobs:
   get_tweets:
     name: 'Retrieve Tweets and Embeds'
     runs-on: ubuntu-latest
+    environment:
+      name: primary
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
