@@ -1767,7 +1767,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-var url = "https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld&place.fields=contained_within,country,country_code,full_name,geo,id,name,place_type&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&max_results=100"
+var url = "https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&max_results=100&place.fields=contained_within,country,country_code,full_name,geo,id,name,place_type&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=public_metrics,author_id,created_at,in_reply_to_user_id,referenced_tweets,source"
 
 let getTwitterData = async (url, requestOptions) => {
   let twitterData = [];
@@ -1777,7 +1777,7 @@ let getTwitterData = async (url, requestOptions) => {
 
   do {
     results.data.forEach(element => twitterData.push(element));
-    let res = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&max_results=100&next_token=${nextToken}`, requestOptions)
+    let res = await fetch(url + `&next_token=${nextToken}`, requestOptions)
     let secondResult = await res.json();
     nextToken = secondResult.meta.next_token;
     secondResult.data.forEach(element => twitterData.push(element));
