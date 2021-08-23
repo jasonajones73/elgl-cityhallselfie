@@ -1770,20 +1770,21 @@ var requestOptions = {
 var url = "https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&max_results=100&place.fields=contained_within,country,country_code,full_name,geo,id,name,place_type&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=public_metrics,author_id,created_at,in_reply_to_user_id,referenced_tweets,source"
 
 let getTwitterData = async (url, requestOptions) => {
-  let twitterData = [];
-  let response = await fetch(url, requestOptions);
-  let results = await response.json();
-  let nextToken = results.meta.next_token;
-
-  do {
+    let twitterData = [];
+    let response = await fetch(url, requestOptions);
+    let results = await response.json();
+    let nextToken = null;
+    results.meta.hasOwnProperty('next_token') ? nextToken = results.meta.next_token : nextToken = null;
     results.data.forEach(element => twitterData.push(element));
-    let res = await fetch(url + `&next_token=${nextToken}`, requestOptions)
-    let secondResult = await res.json();
-    nextToken = secondResult.meta.next_token;
-    secondResult.data.forEach(element => twitterData.push(element));
-  } while (nextToken != null)
-  return twitterData;
-}
+  
+    while (nextToken != null) {
+      let res = await fetch(url + `&next_token=${nextToken}`, requestOptions)
+      let secondResult = await res.json();
+      nextToken = secondResult.meta.next_token;
+      secondResult.data.forEach(element => twitterData.push(element));
+    }
+    return twitterData;
+  }
 
 let getTwitterEmbed = async (tweets) => {
   let embedData = []
