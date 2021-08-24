@@ -10,21 +10,23 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-var url = "https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&max_results=100&place.fields=contained_within,country,country_code,full_name,geo,id,name,place_type&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=public_metrics,author_id,created_at,in_reply_to_user_id,referenced_tweets,source"
+var url = "https://api.twitter.com/2/tweets/search/recent?query=cityhallselfie&max_results=100&expansions=attachments.poll_ids,attachments.media_keys,author_id,in_reply_to_user_id,referenced_tweets.id&place.fields=contained_within,country,country_code,full_name,geo,id,name,place_type&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=public_metrics,author_id,created_at,in_reply_to_user_id,referenced_tweets,source"
 
 let getTwitterData = async (url, requestOptions) => {
-    let twitterData = [];
+    let nextToken = null;
     let response = await fetch(url, requestOptions);
     let results = await response.json();
-    let nextToken = null;
     results.meta.hasOwnProperty('next_token') ? nextToken = results.meta.next_token : nextToken = null;
-    results.data.forEach(element => twitterData.push(element));
+    let twitterData = results;
   
     while (nextToken != null) {
       let res = await fetch(url + `&next_token=${nextToken}`, requestOptions)
       let secondResult = await res.json();
       nextToken = secondResult.meta.next_token;
-      secondResult.data.forEach(element => twitterData.push(element));
+      secondResult.data.forEach(element => twitterData.data.push(element));
+      secondResult.includes.hasOwnProperty('users') ? secondResult.includes.users.forEach(element => twitterData.includes.users.push(element)) : console.log('No users object found')
+      secondResult.includes.hasOwnProperty('tweets') ? secondResult.includes.tweets.forEach(element => twitterData.includes.tweets.push(element)) : console.log('No tweets object found')
+      secondResult.includes.hasOwnProperty('media') ? secondResult.includes.media.forEach(element => twitterData.includes.media.push(element)) : console.log('No media object found')
     }
     return twitterData;
   }
