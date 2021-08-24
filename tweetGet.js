@@ -30,38 +30,38 @@ let getTwitterData = async (url, requestOptions) => {
     }
     return twitterData;
   }
-
-let getTwitterEmbed = async (tweets) => {
-  let embedData = []
-  for(let i = 0;i<tweets.length;i++) {
-      let response = await fetch(`https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/${tweets[i].id}`);
-      let result = await response.json();
-      embedData.push(result);
-  }
-  return embedData;
-} 
-
-let twitterData = [];
-
-getTwitterData(url, requestOptions)
-    .then(result => {
-        twitterData.push(result);
-        return getTwitterEmbed(result, requestOptions);
-    })
-    .then(result => JSON.stringify(result))
-    .then(result => {
-        fs.writeFile('./tweets.json', JSON.stringify(twitterData), err => {
-            if (err) {
-                console.log('Error writing file', err)
-            } else {
-                console.log('Successfully wrote file')
-            }
-        });
-        fs.writeFile('./embedCode.json', result, err => {
-            if (err) {
-                console.log('Error writing file', err)
-            } else {
-                console.log('Successfully wrote file')
-            }
-        });
-    })
+  
+  let getTwitterEmbed = async (tweets) => {
+    let embedData = []
+    for(let i = 0;i<tweets.data.length;i++) {
+        let response = await fetch(`https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/${tweets.data[i].id}`);
+        let result = await response.json();
+        embedData.push(result);
+    }
+    return embedData;
+  } 
+  
+  let twitterData = null;
+  
+  getTwitterData(url, requestOptions)
+      .then(result => {
+          twitterData = result;
+          return getTwitterEmbed(result, requestOptions);
+      })
+      .then(result => JSON.stringify(result))
+      .then(result => {
+          fs.writeFile('./tweets.json', JSON.stringify(twitterData), err => {
+              if (err) {
+                  console.log('Error writing file', err)
+              } else {
+                  console.log('Successfully wrote file')
+              }
+          });
+          fs.writeFile('./embedCode.json', result, err => {
+              if (err) {
+                  console.log('Error writing file', err)
+              } else {
+                  console.log('Successfully wrote file')
+              }
+          });
+      })
